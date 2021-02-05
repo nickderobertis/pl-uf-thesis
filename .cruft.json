@@ -1,0 +1,20 @@
+{
+    "template": "https://github.com/nickderobertis/cookiecutter-pypi-sphinx",
+    "commit": "6f7a45becea44fe323b93e84ed005f77b945fc59",
+    "context": {
+        "cookiecutter": {
+            "package_name": "pl-uf-thesis",
+            "package_directory": "plufthesis",
+            "full_name": "UF Thesis/Dissertation Template for Pyexlatex",
+            "repo_name": "pl-uf-thesis",
+            "repo_username": "nickderobertis",
+            "short_description": "University of Florida Thesis/Dissertation Template for Pyexlatex",
+            "package_author": "Nick DeRobertis",
+            "author_email": "whoopnip@gmail.com",
+            "google_analytics_id": "G-PZENC3W0G8",
+            "logo_url": "",
+            "_template": "https://github.com/nickderobertis/cookiecutter-pypi-sphinx"
+        }
+    },
+    "directory": null
+}
