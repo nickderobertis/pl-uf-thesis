@@ -3,13 +3,15 @@ import fitz
 from tests.config import INPUT_FILES_DIR, GENERATED_FILES_DIR
 
 
-def compare_pdfs_in_generated_vs_input_by_name(name: str):
-    generated_file = GENERATED_FILES_DIR / f'{name}.pdf'
-    input_file = INPUT_FILES_DIR / f'{name}.pdf'
-    compare_pdfs(generated_file, input_file)
+def compare_pdfs_in_generated_vs_input_by_name(
+    name: str, compare_metadata: bool = False
+):
+    generated_file = GENERATED_FILES_DIR / f"{name}.pdf"
+    input_file = INPUT_FILES_DIR / f"{name}.pdf"
+    compare_pdfs(generated_file, input_file, compare_metadata=compare_metadata)
 
 
-def compare_pdfs(path_a: str, path_b: str):
+def compare_pdfs(path_a: str, path_b: str, compare_metadata: bool = False):
     """
     Asserts that two PDFs are equal by loading them from file
     and checking content.
@@ -33,9 +35,8 @@ def compare_pdfs(path_a: str, path_b: str):
     assert pdf_b.isPDF
 
     # compare metadata
-
-    assert _get_metadata(pdf_a) == _get_metadata(pdf_b)
-
+    if compare_metadata:
+        assert _get_metadata(pdf_a) == _get_metadata(pdf_b)
     # compare content
 
     pages_a = _get_pages(pdf_a)
