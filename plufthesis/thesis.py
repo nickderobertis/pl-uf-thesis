@@ -34,6 +34,7 @@ class UFThesis(DocumentBase):
                  abbreviation_contents: Optional[PyexlatexItems] = None,
                  appendix_contents: Optional[Sequence[Chapter]] = None,
                  multiple_appendices: bool = False,
+                 edit_mode: bool = False,
                  bibliography_style: str = 'amsplain',
                  co_chair: Optional[str] = None,
                  thesis_type: ThesisTypes = ThesisTypes.DISSERTATION,
@@ -51,10 +52,15 @@ class UFThesis(DocumentBase):
         # when using hyperlinks which also include hyperref, add this to packages first
         self.data.packages.append(pl.Package('hyperref', modifier_str='linktoc=all'))
 
-        self.document_class_obj = DocumentClass(
-            document_type='uf-thesis-dissertation',
-            options=['editMode'],
-        )
+        if edit_mode:
+            self.document_class_obj = DocumentClass(
+                document_type='uf-thesis-dissertation',
+                options=['editMode'],
+            )
+        else:
+            self.document_class_obj = DocumentClass(
+                document_type='uf-thesis-dissertation',
+            )
 
         from pyexlatex.models.item import ItemBase
         if pre_env_contents is None:
