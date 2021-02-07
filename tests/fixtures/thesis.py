@@ -1,8 +1,13 @@
+from copy import deepcopy
+
 import pytest
 import pyexlatex as pl
 from pyexlatex.models.section.sections import Chapter
+import pandas as pd
 
+from plufthesis.info_models import ThesisTypes
 from plufthesis.thesis import UFThesis
+from tests.config import INPUT_FILES_DIR
 
 EXAMPLE_BODY = [
     Chapter(
@@ -43,15 +48,90 @@ MAJOR = 'Insert Major Here'
 CHAIR = 'Insert Chair Here'
 ABSTRACT = "Insert abstract here"
 BIBLIOGRAPHY = pl.Bibliography([pl.BibTexArticle('person', 'Last, First', 'An article title', 'Journal of Journals', '2021', '10', '1', '255-256')])
+DEGREE_YEAR = 2021
+
+EXAMPLE_DF = pd.DataFrame(
+    [
+        (1, 2),
+        (3, 4)
+    ],
+    columns=('a', 'b')
+)
+GRAPHIC_FILE = INPUT_FILES_DIR / 'nd-logo.png'
+EXAMPLE_BODY_WITH_TABLES_FIGURES = deepcopy(EXAMPLE_BODY)
+EXAMPLE_BODY_WITH_TABLES_FIGURES.append(
+    Chapter(
+        [
+            'Some text',
+            pl.Table.from_list_of_lists_of_dfs([[EXAMPLE_DF]], caption='My Table'),
+            'More text',
+            pl.Figure.from_dict_of_names_and_filepaths({'My Figure': str(GRAPHIC_FILE)})
+        ],
+        title='My Tables and Figures'
+    )
+)
+
+# Optional arguments
+ABBREVIATIONS = 'ABC is for the alphabet',
+APPENDIX_ONE = Chapter('First appendix content', 'Appendix One')
+APPENDIX_TWO = Chapter('Second appendix content', 'Appendix Two')
+SINGLE_APPENDIX = (APPENDIX_ONE,)
+MULTIPLE_APPENDIX = (APPENDIX_ONE, APPENDIX_TWO)
+CO_CHAIR = 'Insert Co-Chair Here'
+THESIS_TYPE = ThesisTypes.THESIS
+DEGREE_TYPE = 'Master of Science'
+DEGREE_MONTH = 'August'
+
+ARGS = (
+    EXAMPLE_BODY,
+    TITLE,
+    AUTHOR,
+    MAJOR,
+    CHAIR,
+    ABSTRACT,
+    BIBLIOGRAPHY
+)
+
+KWARGS = dict(
+    degree_year=DEGREE_YEAR
+)
+
 
 @pytest.fixture(scope='session')
 def thesis():
+    return UFThesis(*ARGS, **KWARGS)
+
+
+@pytest.fixture(scope='session')
+def thesis_full_single_appendix():
     return UFThesis(
-        EXAMPLE_BODY,
-        TITLE,
-        AUTHOR,
-        MAJOR,
-        CHAIR,
-        ABSTRACT,
-        BIBLIOGRAPHY
+        *ARGS, **KWARGS,
+        abbreviation_contents=ABBREVIATIONS,
+        appendix_contents=SINGLE_APPENDIX,
+        co_chair=CO_CHAIR,
+        thesis_type=THESIS_TYPE,
+        degree_type=DEGREE_TYPE,
+        degree_month=DEGREE_MONTH,
+    )
+
+
+@pytest.fixture(scope='session')
+def thesis_multiple_appendix():
+    return UFThesis(
+        *ARGS, **KWARGS,
+        appendix_contents=MULTIPLE_APPENDIX,
+        multiple_appendices=True,
+    )
+
+
+@pytest.fixture(scope='session')
+def thesis_tables_and_figures():
+    tf_args = (
+        EXAMPLE_BODY_WITH_TABLES_FIGURES,
+        *ARGS[1:]
+    )
+    return UFThesis(
+        *tf_args, **KWARGS,
+        has_figures=True,
+        has_tables=True,
     )

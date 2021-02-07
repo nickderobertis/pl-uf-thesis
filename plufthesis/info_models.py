@@ -58,4 +58,4 @@ class Chair(SimpleItem):
         modifiers: Optional[str] = None
         if co_chair:
             modifiers = self._wrap_with_bracket(co_chair)
-        super().__init__(self.name, chair, modifiers=modifiers)
+        super().__init__(self.name, chair, pre_modifiers=modifiers)
