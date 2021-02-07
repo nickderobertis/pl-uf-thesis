@@ -32,6 +32,10 @@ def elevate_sections_by_one_level(content: str) -> str:
     SubSubSections to SubSections. Raises error if a Chapter is
     encountered
 
+    Useful to use as pre_output_func in UFThesis if the contents
+    were originally set up with Section as the highest level
+    rather than Chapter
+
     :param content:
     :return:
     """
