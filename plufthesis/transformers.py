@@ -1,5 +1,5 @@
 import re
-from typing import Type, Sequence, Dict
+from typing import Type, Sequence, Dict, cast
 
 import pyexlatex as pl
 from pyexlatex.models.section.base import SectionBase
@@ -47,7 +47,7 @@ def elevate_sections_by_one_level(content: str) -> str:
 
 
 def _replace_with_next_level_up_section(match: re.Match) -> str:
-    kind = match.lastgroup
+    kind = cast(str, match.lastgroup)
     name = kind.split("_")[-1]
     cls = SECTION_CLASSES_BY_NAME[name]
     new_cls = NEXT_LEVEL_UP_CLASSES_BY_NAME.get(name, None)
