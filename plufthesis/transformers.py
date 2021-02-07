@@ -1,3 +1,6 @@
+"""
+Functions which transform string content
+"""
 import re
 from typing import Type, Sequence, Dict, cast
 
