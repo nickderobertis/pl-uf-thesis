@@ -47,6 +47,9 @@ class UFThesis(DocumentBase):
                  pre_output_func: Optional[Callable] = None):
 
         self.init_data()
+        # This package import is already handled in the cls file. To avoid conflicts
+        # when using hyperlinks which also include hyperref, add this to packages first
+        self.data.packages.append(pl.Package('hyperref', modifier_str='linktoc=all'))
 
         self.document_class_obj = DocumentClass(
             document_type='uf-thesis-dissertation',
