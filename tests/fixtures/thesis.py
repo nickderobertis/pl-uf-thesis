@@ -2,22 +2,22 @@ from copy import deepcopy
 
 import pytest
 import pyexlatex as pl
-from pyexlatex.models.section.sections import Chapter
 import pandas as pd
 
 from plufthesis.info_models import ThesisTypes
 from plufthesis.thesis import UFThesis
+from plufthesis.transformers import elevate_sections_by_one_level
 from tests.config import INPUT_FILES_DIR
 
 EXAMPLE_BODY = [
-    Chapter(
+    pl.Chapter(
         [
             'Some content',
             pl.UnorderedList(['a', 'b', 'c']),
         ],
         title='First'
     ),
-    Chapter(
+    pl.Chapter(
         [
             'Chapter content',
             pl.Section(
@@ -27,6 +27,39 @@ EXAMPLE_BODY = [
                         [
                             'Subsection content',
                             pl.SubSubSection(
+                                [
+                                    'Subsubsubsection content'
+                                ],
+                                title='First sub sub'
+                            )
+                        ],
+                        title='First sub'
+                    )
+                ],
+                title='First section'
+            )
+        ],
+        title='Second'
+    )
+]
+EXAMPLE_BODY_NEXT_LEVEL_DOWN = [
+    pl.Section(
+        [
+            'Some content',
+            pl.UnorderedList(['a', 'b', 'c']),
+        ],
+        title='First'
+    ),
+    pl.Section(
+        [
+            'Chapter content',
+            pl.SubSection(
+                [
+                    'Section content',
+                    pl.SubSubSection(
+                        [
+                            'Subsection content',
+                            pl.Paragraph(
                                 [
                                     'Subsubsubsection content'
                                 ],
@@ -60,7 +93,7 @@ EXAMPLE_DF = pd.DataFrame(
 GRAPHIC_FILE = INPUT_FILES_DIR / 'nd-logo.png'
 EXAMPLE_BODY_WITH_TABLES_FIGURES = deepcopy(EXAMPLE_BODY)
 EXAMPLE_BODY_WITH_TABLES_FIGURES.append(
-    Chapter(
+    pl.Chapter(
         [
             'Some text',
             pl.Table.from_list_of_lists_of_dfs([[EXAMPLE_DF]], caption='My Table'),
@@ -73,8 +106,8 @@ EXAMPLE_BODY_WITH_TABLES_FIGURES.append(
 
 # Optional arguments
 ABBREVIATIONS = 'ABC is for the alphabet',
-APPENDIX_ONE = Chapter('First appendix content', 'Appendix One')
-APPENDIX_TWO = Chapter('Second appendix content', 'Appendix Two')
+APPENDIX_ONE = pl.Chapter('First appendix content', 'Appendix One')
+APPENDIX_TWO = pl.Chapter('Second appendix content', 'Appendix Two')
 SINGLE_APPENDIX = (APPENDIX_ONE,)
 MULTIPLE_APPENDIX = (APPENDIX_ONE, APPENDIX_TWO)
 CO_CHAIR = 'Insert Co-Chair Here'
@@ -135,3 +168,12 @@ def thesis_tables_and_figures():
         has_figures=True,
         has_tables=True,
     )
+
+
+@pytest.fixture(scope='session')
+def thesis_from_next_level_down():
+    tf_args = (
+        EXAMPLE_BODY_NEXT_LEVEL_DOWN,
+        *ARGS[1:]
+    )
+    return UFThesis(*tf_args, **KWARGS, pre_output_func=elevate_sections_by_one_level)
