@@ -1,0 +1,7 @@
+plufthesis
+==========
+
+.. toctree::
+   :maxdepth: 4
+
+   plufthesis

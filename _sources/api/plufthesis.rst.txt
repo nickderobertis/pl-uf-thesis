@@ -1,0 +1,51 @@
+plufthesis package
+==================
+
+.. automodule:: plufthesis
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+plufthesis.config module
+------------------------
+
+.. automodule:: plufthesis.config
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+plufthesis.doc\_class\_type module
+----------------------------------
+
+.. automodule:: plufthesis.doc_class_type
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+plufthesis.info\_models module
+------------------------------
+
+.. automodule:: plufthesis.info_models
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+plufthesis.thesis module
+------------------------
+
+.. automodule:: plufthesis.thesis
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+plufthesis.transformers module
+------------------------------
+
+.. automodule:: plufthesis.transformers
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
