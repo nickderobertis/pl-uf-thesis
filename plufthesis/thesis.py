@@ -32,7 +32,7 @@ class UFThesis(DocumentBase):
                  acknowledgements_contents: PyexlatexItems = 'I would like to thank...',
                  biographical_contents: PyexlatexItems = 'Nick made this Pyexlatex template from the LaTeX template, then got a Ph.D.',
                  abbreviation_contents: Optional[PyexlatexItems] = None,
-                 appendix_contents: Sequence[Chapter] = (Chapter('Appendix contents', 'Appendix One'),),
+                 appendix_contents: Optional[Sequence[Chapter]] = None,
                  multiple_appendices: bool = False,
                  bibliography_style: str = 'amsplain',
                  co_chair: Optional[str] = None,
@@ -74,8 +74,6 @@ class UFThesis(DocumentBase):
             abstractFile=abstract,
             referenceFile=bibliography,
             biographyFile=biographical_contents,
-            abbreviations=abbreviation_contents,
-            appendix=appendix_contents,
         )
 
         set_ref_file = r'\setReferenceFile{referenceFile}{' + bibliography_style + '}%'
@@ -95,7 +93,6 @@ class UFThesis(DocumentBase):
 \setAcknowledgementsFile{acknowledgementsFile}%     Acknowledgements Page
 \setAbstractFile{abstractFile}%                     Abstract Page (This should only include the abstract itself)
 \setBiographicalFile{biographyFile}%                Biography file of the Author (you).
-\setAppendixFile{appendix}%                     Appendix Content; hyperlinking might be weird.
             """),
             pl.Raw(set_ref_file),
         ])
@@ -106,10 +103,17 @@ class UFThesis(DocumentBase):
 %                                                   comment it if you have only one appendix.
             """))
 
-        if abbreviation_contents:
+        if abbreviation_contents is not None:
             pre_env_contents_list.append(pl.Raw(r"""
 \setAbbreviationsFile{abbreviations}%           Abbreviations Page
             """))
+            self.temp_tex_contents.update(abbreviations=abbreviation_contents)
+
+        if appendix_contents is not None:
+            pre_env_contents_list.append(pl.Raw(r"""
+\setAppendixFile{appendix}%                     Appendix Content; hyperlinking might be weird.
+                        """))
+            self.temp_tex_contents.update(appendix=appendix_contents)
 
         super().__init__(
             content,
