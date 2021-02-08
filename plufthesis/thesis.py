@@ -88,7 +88,6 @@ class UFThesis(DocumentBase):
             referenceFile=_build(bibliography.references),
             biographyFile=biographical_contents,
         )
-
         set_ref_file = r'\setReferenceFile{referenceFile}{' + bibliography_style + '}%'
 
         pre_env_contents_list.extend([
@@ -127,6 +126,9 @@ class UFThesis(DocumentBase):
 \setAppendixFile{appendix}%                     Appendix Content; hyperlinking might be weird.
                         """))
             self.temp_tex_contents.update(appendix=appendix_contents)
+
+        for temp_content in self.temp_tex_contents.values():
+            self.add_data_from_content(temp_content)
 
         super().__init__(
             content,

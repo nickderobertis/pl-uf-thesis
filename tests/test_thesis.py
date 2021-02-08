@@ -10,6 +10,7 @@ from tests.fixtures.thesis import (
     thesis_multiple_appendix,
     thesis_tables_and_figures,
     thesis_from_next_level_down,
+    thesis_appendix_tables_and_figures,
 )
 
 
@@ -44,5 +45,12 @@ def test_create_thesis_tables_and_figures(thesis_tables_and_figures):
 def test_create_thesis_from_next_level_down(thesis_from_next_level_down):
     name = "thesis"
     doc = thesis_from_next_level_down
+
+    compare_doc(doc, name)
+
+
+def test_create_thesis_appendix_tables_and_figures(thesis_appendix_tables_and_figures):
+    name = "thesis_appendix_tables_and_figures"
+    doc = thesis_appendix_tables_and_figures
 
     compare_doc(doc, name)

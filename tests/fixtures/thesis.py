@@ -93,18 +93,17 @@ EXAMPLE_DF = pd.DataFrame(
     columns=('a', 'b')
 )
 GRAPHIC_FILE = INPUT_FILES_DIR / 'nd-logo.png'
-EXAMPLE_BODY_WITH_TABLES_FIGURES = deepcopy(EXAMPLE_BODY)
-EXAMPLE_BODY_WITH_TABLES_FIGURES.append(
-    pl.Chapter(
-        [
-            'Some text',
-            pl.Table.from_list_of_lists_of_dfs([[EXAMPLE_DF]], caption='My Table'),
-            'More text',
-            pl.Figure.from_dict_of_names_and_filepaths({'My Figure': str(GRAPHIC_FILE)})
-        ],
-        title='My Tables and Figures'
-    )
+TABLES_FIGURES_CHAPTER = pl.Chapter(
+    [
+        'Some text',
+        pl.Table.from_list_of_lists_of_dfs([[EXAMPLE_DF]], caption='My Table'),
+        'More text',
+        pl.Figure.from_dict_of_names_and_filepaths({'My Figure': str(GRAPHIC_FILE)})
+    ],
+    title='My Tables and Figures'
 )
+EXAMPLE_BODY_WITH_TABLES_FIGURES = deepcopy(EXAMPLE_BODY)
+EXAMPLE_BODY_WITH_TABLES_FIGURES.append(TABLES_FIGURES_CHAPTER)
 
 # Optional arguments
 ABBREVIATIONS = 'ABC is for the alphabet',
@@ -179,3 +178,14 @@ def thesis_from_next_level_down():
         *ARGS[1:]
     )
     return UFThesis(*tf_args, **KWARGS, pre_output_func=elevate_sections_by_one_level)
+
+
+@pytest.fixture(scope='session')
+def thesis_appendix_tables_and_figures():
+    return UFThesis(
+        *ARGS, **KWARGS,
+        has_figures=True,
+        has_tables=True,
+        appendix_contents=[TABLES_FIGURES_CHAPTER],
+        multiple_appendices=True,
+    )
