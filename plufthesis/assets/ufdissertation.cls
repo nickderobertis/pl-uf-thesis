@@ -59,6 +59,7 @@
     {caption}
     \captionsetup[table]{skip=0pt}
 %\RequirePackage{tocloft}%              This is an often recommended package, but generates tons of errors/instability DO NOTE USE.
+\RequirePackage{floatrow}
 
 \RequirePackage[plain]{algorithm}%      Load the algorithm environment, which we hijack into the "Objects" environment.
 %                                               The "plain" option is to remove the special algorithm formating in the text.
@@ -67,7 +68,6 @@
 %                                           The "largestsep" option forces the gap between chapter and text to be the same as
 %                                               the gap between the chapter and section when they occur consecutively.
 \RequirePackage{titletoc}%          Use this to manipulate Table of Contents styling
-\RequirePackage{float}
 \RequirePackage[numbers]{natbib}
 
 \providecommand{\ifExists}[3]{%     Check to see if a macro is defined, for the use of detecting 

@@ -1,0 +1,80 @@
+\documentclass[]{uf-thesis-dissertation}
+\usepackage[linktoc=all]{hyperref}
+\usepackage[numbers]{natbib}
+\usepackage{threeparttable}
+\usepackage{booktabs}
+\usepackage{dcolumn}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{.}{D{.}{.}{-1}}
+\usepackage{graphicx}
+\haveTablestrue
+\haveFigurestrue
+\sloppy
+\title{Insert Title Here}
+\degreeType{Doctorate of Philosophy}
+\major{Insert Major Here}
+\author{Nick DeRobertis}
+\thesisType{Dissertation}
+\degreeYear{2021}
+\degreeMonth{May}
+\chair{Insert Chair Here}
+
+\setDedicationFile{dedicationFile}%                 Dedication Page
+\setAcknowledgementsFile{acknowledgementsFile}%     Acknowledgements Page
+\setAbstractFile{abstractFile}%                     Abstract Page (This should only include the abstract itself)
+\setBiographicalFile{biographyFile}%                Biography file of the Author (you).
+            
+\setReferenceFile{referenceFile}{amsplain}%
+\usepackage{floatrow}
+\DeclareFloatFont{footnotesize}{\footnotesize}
+\floatsetup[table]{font=footnotesize,capposition=top}
+\DeclareFloatFont{footnotesize}{\footnotesize}
+\floatsetup[figure]{font=footnotesize,capposition=top}
+\begin{document}
+\begin{chapter}{First}
+Some content
+\begin{itemize}
+\item a
+\item b
+\item c
+\end{itemize}
+\end{chapter}
+\begin{chapter}{Second}
+Chapter content
+\begin{section}{First section}
+Section content
+\begin{subsection}{First sub}
+Subsection content
+\begin{subsubsection}{First sub sub}
+Subsubsubsection content
+\citep{person}
+\end{subsubsection}
+\end{subsection}
+\end{section}
+\end{chapter}
+\begin{chapter}{My Tables and Figures}
+Some text
+\begin{table}
+\centering
+\begin{threeparttable}
+\caption{My Table}
+\begin{tabular}{lc}
+\toprule
+a & b\\
+\midrule
+1 & 2 \\
+3 & 4 \\
+\bottomrule
+
+\end{tabular}
+\end{threeparttable}
+\end{table}
+More text
+\begin{figure}
+\includegraphics[width=0.45\linewidth]{Sources/nd-logo.png}
+\caption{My Figure}
+\end{figure}
+\end{chapter}
+\end{document}

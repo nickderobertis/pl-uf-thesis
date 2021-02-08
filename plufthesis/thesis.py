@@ -14,6 +14,7 @@ from pyexlatex.models.document import DocumentBase
 from pyexlatex.models.format.paragraph.sloppy import Sloppy
 from pyexlatex.models.title.title import Title
 from pyexlatex.typing import PyexlatexItems
+from pyexlatex.models.document import get_table_figure_size_packages
 import plufthesis.info_models as im
 
 from plufthesis.info_models import ThesisTypes
@@ -43,6 +44,8 @@ class UFThesis(DocumentBase):
                  degree_month: str = 'May',
                  has_tables: bool = False, has_figures: bool = False,
                  has_objects: bool = False,
+                 tables_relative_font_size: int = 0,
+                 figures_relative_font_size: int = 0,
                  packages: Optional[List[Union[Package, str]]]=None,
                  pre_env_contents: Optional[PyexlatexItems] = None,
                  pre_output_func: Optional[Callable] = None):
@@ -129,6 +132,10 @@ class UFThesis(DocumentBase):
 
         for temp_content in self.temp_tex_contents.values():
             self.add_data_from_content(temp_content)
+
+        pre_env_contents_list.extend(
+            get_table_figure_size_packages(tables_relative_font_size, figures_relative_font_size)
+        )
 
         super().__init__(
             content,

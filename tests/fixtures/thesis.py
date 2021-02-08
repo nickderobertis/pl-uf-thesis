@@ -189,3 +189,18 @@ def thesis_appendix_tables_and_figures():
         appendix_contents=[TABLES_FIGURES_CHAPTER],
         multiple_appendices=True,
     )
+
+
+@pytest.fixture(scope='session')
+def thesis_small_tables_and_figures():
+    tf_args = (
+        EXAMPLE_BODY_WITH_TABLES_FIGURES,
+        *ARGS[1:]
+    )
+    return UFThesis(
+        *tf_args, **KWARGS,
+        has_figures=True,
+        has_tables=True,
+        tables_relative_font_size=-2,
+        figures_relative_font_size=-2,
+    )
