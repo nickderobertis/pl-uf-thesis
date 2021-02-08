@@ -1,5 +1,7 @@
 from pathlib import Path
 
+GENERATE_MODE: bool = False
+
 TESTS_PATH = Path(__file__).parent
 GENERATED_FILES_DIR = TESTS_PATH / 'generated_files'
 INPUT_FILES_DIR = TESTS_PATH / 'input_files'
