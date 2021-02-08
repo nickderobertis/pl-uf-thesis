@@ -6,7 +6,7 @@ from typing import Union, List, Optional, Sequence, Callable, Dict
 
 import pyexlatex as pl
 from pyexlatex import Package
-from pyexlatex.logic.builder import build
+from pyexlatex.logic.builder import build, _build
 from pyexlatex.models.control.documentclass.documentclass import DocumentClass
 from pyexlatex.models.section.sections import Chapter
 from pyexlatex.models.credits.author import Author
@@ -46,11 +46,15 @@ class UFThesis(DocumentBase):
                  packages: Optional[List[Union[Package, str]]]=None,
                  pre_env_contents: Optional[PyexlatexItems] = None,
                  pre_output_func: Optional[Callable] = None):
-
         self.init_data()
-        # This package import is already handled in the cls file. To avoid conflicts
-        # when using hyperlinks which also include hyperref, add this to packages first
+        # These package imports are already handled in the cls file. To avoid conflicts
+        # when using items which also include these packages, add these to packages first
         self.data.packages.append(pl.Package('hyperref', modifier_str='linktoc=all'))
+        self.data.packages.append(pl.Package('natbib', modifier_str='numbers'))
+
+        # Necessary to get self.data.references which sets self.has_references in DocumentBase
+        # which enables bibtex
+        self.data.references.extend(bibliography.references)
 
         if edit_mode:
             self.document_class_obj = DocumentClass(
@@ -81,7 +85,7 @@ class UFThesis(DocumentBase):
             dedicationFile=dedication_contents,
             acknowledgementsFile=acknowledgements_contents,
             abstractFile=abstract,
-            referenceFile=bibliography,
+            referenceFile=_build(bibliography.references),
             biographyFile=biographical_contents,
         )
 
@@ -131,8 +135,8 @@ class UFThesis(DocumentBase):
             pre_output_func=pre_output_func,
         )
 
-    def _write_temp_tex_file(self, name: str, content: PyexlatexItems, directory: Path):
-        out_path = directory / f'{name}.tex'
+    def _write_temp_tex_file(self, name: str, content: PyexlatexItems, directory: Path, ext: str = 'tex'):
+        out_path = directory / f'{name}.{ext}'
         text_content = build(content)
         out_path.write_text(text_content)
         self.data.filepaths.append(str(out_path))
@@ -140,7 +144,11 @@ class UFThesis(DocumentBase):
 
     def _write_temp_tex_files(self, directory: Path):
         for name, content in self.temp_tex_contents.items():
-            self._write_temp_tex_file(name, content, directory)
+            if name == 'referenceFile':
+                ext = 'bib'
+            else:
+                ext = 'tex'
+            self._write_temp_tex_file(name, content, directory, ext=ext)
 
     def to_pdf(self, *args, **kwargs):
         with TemporaryDirectory() as tmp:

@@ -28,7 +28,8 @@ EXAMPLE_BODY = [
                             'Subsection content',
                             pl.SubSubSection(
                                 [
-                                    'Subsubsubsection content'
+                                    'Subsubsubsection content',
+                                    pl.CiteP('person'),
                                 ],
                                 title='First sub sub'
                             )
@@ -61,7 +62,8 @@ EXAMPLE_BODY_NEXT_LEVEL_DOWN = [
                             'Subsection content',
                             pl.Paragraph(
                                 [
-                                    'Subsubsubsection content'
+                                    'Subsubsubsection content',
+                                    pl.CiteP('person'),
                                 ],
                                 title='First sub sub'
                             )
