@@ -3,11 +3,6 @@
 \usepackage[numbers]{natbib}
 \usepackage{threeparttable}
 \usepackage{booktabs}
-\usepackage{dcolumn}
-\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{.}{D{.}{.}{-1}}
 \usepackage{graphicx}
 \haveTablestrue
 \haveFigurestrue
@@ -29,9 +24,9 @@
 \setReferenceFile{referenceFile}{amsplain}%
 \usepackage{floatrow}
 \DeclareFloatFont{footnotesize}{\footnotesize}
-\floatsetup[table]{font=footnotesize,capposition=top}
+\floatsetup[table]{font=footnotesize,capposition=top,captionskip=0pt}
 \DeclareFloatFont{footnotesize}{\footnotesize}
-\floatsetup[figure]{font=footnotesize,capposition=top}
+\floatsetup[figure]{font=footnotesize,capposition=top,captionskip=0pt}
 \begin{document}
 \begin{chapter}{First}
 Some content

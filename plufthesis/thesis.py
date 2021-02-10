@@ -133,8 +133,14 @@ class UFThesis(DocumentBase):
         for temp_content in self.temp_tex_contents.values():
             self.add_data_from_content(temp_content)
 
+        floatrow_options = 'capposition=top,captionskip=0pt'
         pre_env_contents_list.extend(
-            get_table_figure_size_packages(tables_relative_font_size, figures_relative_font_size)
+            get_table_figure_size_packages(
+                tables_relative_font_size,
+                figures_relative_font_size,
+                floatrow_table_options=floatrow_options,
+                floatrow_figure_options=floatrow_options,
+            )
         )
 
         super().__init__(
