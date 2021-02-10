@@ -16,6 +16,7 @@ from pyexlatex.models.title.title import Title
 from pyexlatex.typing import PyexlatexItems
 from pyexlatex.models.document import get_table_figure_size_packages
 import plufthesis.info_models as im
+from plufthesis import register_doc_type
 
 from plufthesis.info_models import ThesisTypes
 
@@ -46,19 +47,22 @@ class UFThesis(DocumentBase):
                  has_objects: bool = False,
                  tables_relative_font_size: int = 0,
                  figures_relative_font_size: int = 0,
+                 natbib_options: Optional[str] = 'numbers',
                  packages: Optional[List[Union[Package, str]]]=None,
                  pre_env_contents: Optional[PyexlatexItems] = None,
                  pre_output_func: Optional[Callable] = None):
+        self.natbib_options = natbib_options
         self.init_data()
         # These package imports are already handled in the cls file. To avoid conflicts
         # when using items which also include these packages, add these to packages first
         self.data.packages.append(pl.Package('hyperref', modifier_str='linktoc=all'))
-        self.data.packages.append(pl.Package('natbib', modifier_str='numbers'))
+        self.data.packages.append(pl.Package('natbib', modifier_str=natbib_options))
 
         # Necessary to get self.data.references which sets self.has_references in DocumentBase
         # which enables bibtex
         self.data.references.extend(bibliography.references)
 
+        register_doc_type(self.natbib_options)
         if edit_mode:
             self.document_class_obj = DocumentClass(
                 document_type='uf-thesis-dissertation',
@@ -68,6 +72,7 @@ class UFThesis(DocumentBase):
             self.document_class_obj = DocumentClass(
                 document_type='uf-thesis-dissertation',
             )
+        register_doc_type()
 
         from pyexlatex.models.item import ItemBase
         if pre_env_contents is None:

@@ -159,6 +159,15 @@ def thesis_multiple_appendix():
 
 
 @pytest.fixture(scope='session')
+def thesis_custom_doc_class():
+    return UFThesis(
+        *ARGS, **KWARGS,
+        natbib_options=None,
+        bibliography_style='apalike',
+    )
+
+
+@pytest.fixture(scope='session')
 def thesis_tables_and_figures():
     tf_args = (
         EXAMPLE_BODY_WITH_TABLES_FIGURES,
