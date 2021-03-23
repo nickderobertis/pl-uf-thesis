@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>plufthesis.doc_class_type &mdash; pl-uf-thesis 0.1.0 documentation</title>
+  <title>plufthesis.doc_class_type &mdash; pl-uf-thesis 0.2.0 documentation</title>
   
 
   
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0.1.0
+                0.2.0
               </div>
             
           
@@ -164,20 +164,36 @@
            <div itemprop="articleBody">
             
   <h1>Source code for plufthesis.doc_class_type</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
-<span class="kn">from</span> <span class="nn">pyexlatex.models.control.documentclass.classtypes.documentclasstype</span> <span class="kn">import</span> <span class="n">DocumentClassType</span>
+<span class="kn">import</span> <span class="nn">pyexlatex</span> <span class="k">as</span> <span class="nn">pl</span>
+<span class="kn">from</span> <span class="nn">pyexlatex.models.control.documentclass.classtypes.documentclasstype</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DocumentClassType</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">plufthesis.config</span> <span class="kn">import</span> <span class="n">ASSETS_PATH</span>
 
 <span class="n">UF_THESIS_DISSERTATION_CLS_FILE</span> <span class="o">=</span> <span class="n">ASSETS_PATH</span> <span class="o">/</span> <span class="s2">&quot;ufdissertation.cls&quot;</span>
 <span class="n">UF_THESIS_DISSERTATION_CLS_TEXT</span> <span class="o">=</span> <span class="n">UF_THESIS_DISSERTATION_CLS_FILE</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 
-<span class="n">class_type</span> <span class="o">=</span> <span class="n">DocumentClassType</span><span class="p">(</span><span class="s1">&#39;uf-thesis-dissertation&#39;</span><span class="p">,</span> <span class="n">UF_THESIS_DISSERTATION_CLS_TEXT</span><span class="p">)</span>
+
+<div class="viewcode-block" id="get_class_type"><a class="viewcode-back" href="../../api/plufthesis.html#plufthesis.doc_class_type.get_class_type">[docs]</a><span class="k">def</span> <span class="nf">get_class_type</span><span class="p">(</span><span class="n">natbib_options</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;numbers&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DocumentClassType</span><span class="p">:</span>
+    <span class="n">orig_natbib</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">RequirePackage</span><span class="p">(</span><span class="s2">&quot;natbib&quot;</span><span class="p">,</span> <span class="n">modifier_str</span><span class="o">=</span><span class="s2">&quot;numbers&quot;</span><span class="p">)</span>
+    <span class="n">new_natbib</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">RequirePackage</span><span class="p">(</span><span class="s2">&quot;natbib&quot;</span><span class="p">,</span> <span class="n">modifier_str</span><span class="o">=</span><span class="n">natbib_options</span><span class="p">)</span>
+    <span class="n">new_cls_text</span> <span class="o">=</span> <span class="n">UF_THESIS_DISSERTATION_CLS_TEXT</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">orig_natbib</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">new_natbib</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">class_type</span> <span class="o">=</span> <span class="n">DocumentClassType</span><span class="p">(</span><span class="s2">&quot;uf-thesis-dissertation&quot;</span><span class="p">,</span> <span class="n">new_cls_text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">class_type</span></div>
+
 
 <span class="c1"># TODO [$602039315315e00008a1abd9]: replace this once pyexlatex has a more convenient way of adding custom class types</span>
-<div class="viewcode-block" id="register_doc_type"><a class="viewcode-back" href="../../api/plufthesis.html#plufthesis.doc_class_type.register_doc_type">[docs]</a><span class="k">def</span> <span class="nf">register_doc_type</span><span class="p">():</span>
-    <span class="kn">from</span> <span class="nn">pyexlatex.models.control.documentclass.classtypes.custom</span> <span class="kn">import</span> <span class="n">CUSTOM_CLASS_TYPES</span>
+<div class="viewcode-block" id="register_doc_type"><a class="viewcode-back" href="../../api/plufthesis.html#plufthesis.doc_class_type.register_doc_type">[docs]</a><span class="k">def</span> <span class="nf">register_doc_type</span><span class="p">(</span><span class="n">natbib_options</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;numbers&quot;</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">pyexlatex.models.control.documentclass.classtypes.custom</span> <span class="kn">import</span> <span class="p">(</span>
+        <span class="n">CUSTOM_CLASS_TYPES</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">class_type</span> <span class="o">=</span> <span class="n">get_class_type</span><span class="p">(</span><span class="n">natbib_options</span><span class="p">)</span>
     <span class="n">CUSTOM_CLASS_TYPES</span><span class="p">[</span><span class="n">class_type</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">class_type</span></div>
 </pre></div>
 
