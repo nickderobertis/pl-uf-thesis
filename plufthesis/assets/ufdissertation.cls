@@ -732,7 +732,8 @@
             
             \phantomsection%                            We use a phantom section under the assumption that the appendicies 
             %                                               will each individually be named via a \chapter command in the file.
-            \addcontentsline{toc}{chapter}{APPENDIX}
+            \addtocontents{toc}{\protect\vspace{0.7em}}
+            \addtocontents{toc}{\protect\contentsline{part}{APPENDIX}{}{}}%% Input a dummy "CHAPTER" heading to show user-content
             
             \setcounter{secnumdepth}{4}
             \newcounter{appendixVal}%                   Use an entirely different counter for Appendicies to avoid
