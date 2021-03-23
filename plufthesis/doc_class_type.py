@@ -21,7 +21,7 @@ def get_class_type(natbib_options: Optional[str] = "numbers") -> DocumentClassTy
     return class_type
 
 
-# TODO [$602039315315e00008a1abd9]: replace this once pyexlatex has a more convenient way of adding custom class types
+# TODO [#1]: replace this once pyexlatex has a more convenient way of adding custom class types
 def register_doc_type(natbib_options: Optional[str] = "numbers"):
     from pyexlatex.models.control.documentclass.classtypes.custom import (
         CUSTOM_CLASS_TYPES,
