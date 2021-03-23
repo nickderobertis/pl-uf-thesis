@@ -40,7 +40,7 @@ class UFThesis(DocumentBase):
                  bibliography_style: str = 'amsplain',
                  co_chair: Optional[str] = None,
                  thesis_type: ThesisTypes = ThesisTypes.DISSERTATION,
-                 degree_type: str = 'Doctorate of Philosophy',
+                 degree_type: str = 'Doctor of Philosophy',
                  degree_year: int = datetime.datetime.today().year,
                  degree_month: str = 'May',
                  has_tables: bool = False, has_figures: bool = False,
